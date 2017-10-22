@@ -2,7 +2,7 @@ const Package = require('./package.json');
 
 const config = {
     uri: '',
-    port: 3030,
+    port: 3130,
     info: {
         title: "REST interface to simple NLP tasks",
         version: "1.0.1",

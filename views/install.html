@@ -1,0 +1,114 @@
+<style>
+figure img {width: 100%;}
+pre code {background-color: black; border: 1px black;}
+/* Center the loader */
+#loader {
+  z-index: 1;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Add animation to "page content" */
+.animate-bottom {
+  position: relative;
+  -webkit-animation-name: animatebottom;
+  -webkit-animation-duration: 1s;
+  animation-name: animatebottom;
+  animation-duration: 1s
+}
+
+@-webkit-keyframes animatebottom {
+  from { bottom:-100px; opacity:0 } 
+  to { bottom:0px; opacity:1 }
+}
+
+@keyframes animatebottom { 
+  from{ bottom:-100px; opacity:0 } 
+  to{ bottom:0; opacity:1 }
+}
+</style>
+
+<h1>Installation, Use and Examples</h1>
+
+<section id="install" class="row">
+    <h2>Installation</h2>
+
+    <h3>Method 1</h3>
+    <p><code>git</code>, a relatively new version of <code>nodejs</code> (I am using 8.x) and <code>yarn</code>.</p>
+
+<pre><code class="bash">$ git clone git@github.com:punkish/deuxems.git
+$ cd deuxems
+$ yarn
+$ node index.js
+</code></pre>
+
+    <h3>Method 2</h3>
+    <p><code>git</code> and <code>nodejs</code> are non-negotiable, but if you don’t have or can’t install <code>yarn</code>, <code>npm</code> should work as well.</p>
+
+<pre><code class="bash">$ git clone git@github.com:punkish/zenodeo.git
+$ cd deuxems
+$ npm install
+$ node index.js
+</code></pre>
+
+    <p>While an instance of this application is running on this website as a demo, it is really designed to be installed and run on one’s own (or a team’s) computer. For one, the demo version is really just a demo and is not guaranteed to be either stable or even running all the time. More importantly, this application will soon provide caching of results. This means your own personal queries will be cached on your computer saving you a tremendous amount of time when doing repeated identical queries.</p>
+</section>
+
+<section id="use" class="row">
+    <h2>Use</h2>
+
+    <p>Once everthing is installed, start the application with <code class="bash">$ node index.js</code>. You should see something like the following</p>
+
+<pre><code class="bash">$ node index.js
+http://localhost:3030
+    GET    /{param*}                      static files
+    GET    /about                         about
+    GET    /docs                          docs
+    GET    /install                       installation instructions
+    GET    /swagger.json
+    GET    /swaggerui/{path*}
+    GET    /swaggerui/extend.js
+    GET    /tos                           terms of service
+    GET    /v1                            biosyslit
+    GET    /v1/files/{file_id}            files
+    GET    /v1/record/{id}                records
+    GET    /v1/records                    records
+
+Server running at: http://localhost:3030
+</code></pre>
+
+    <p>Now you can begin querying the API. Below is an example using <code>curl</code> but feel free to use whatever programming language or application you prefer.</p>
+
+<pre><code class="bash">$ curl -X POST \
+    --header 'Content-Type: application/x-www-form-urlencoded' \
+    --header 'Accept: application/json' \
+    -d 'input=I have been living in Berlin and working in Goettingen' \
+    'http://localhost:3030/v1/text?task=tokenizeAndStem'
+}</code></pre>
+
+    <p>You can get more examples of queries <a href="/docs">from the docs</a>.</p>
+</section>
+
+<section id="examples" class="row">
+    <h2>Examples</h2>
+
+    <p>coming soon</p>
+</section>

@@ -96,7 +96,7 @@ server.register(
                     tags: ['private']
                 },
                 handler: function(request, reply) {
-                    reply.redirect(Apis[Apis.length - 1].routes.prefix);
+                    reply.redirect('/docs');
                 }
             },
             require('./resources/inert'),

@@ -1,0 +1,66 @@
+<section class="row">
+    <h1>Geoparser</h1>
+    
+    <form method="post" action="/text2">
+        <label for="text">text to parse</label>
+        <textarea class="u-full-width" 
+            placeholder="example text: I live in Frankfurt but I go to Berlin a lot and I also like to visit Hamburg" 
+            id="text"></textarea><br>
+        <button id="geoparse">geoparse this</button>
+    </form>
+    
+    <div id="map"></div>
+    <div><pre><code id="result" class="json"></code></pre></div>
+    
+    <script type="text/javascript">
+        window.onload = function() {
+            var map = L.map('map').setView([52.520645, 13.409779], 4);
+    
+            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+    
+            var markers = new L.FeatureGroup();
+            var geoparse = document.getElementById("geoparse");
+            var text = document.getElementById("text");
+            var result = document.getElementById("result");
+            geoparse.addEventListener("click", function(event) {
+                var http = new XMLHttpRequest();
+                var url = "/v1/text?task=geoparse";
+                var params = "input=" + text.value;
+                http.open("POST", url, true);
+    
+                //Send the proper header information along with the request
+                http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    
+                //Call a function when the state changes
+                http.onreadystatechange = function() {
+                    if(http.readyState == 4 && http.status == 200) {
+                        var data = http.responseText;
+                        var json = JSON.parse(data);
+    
+                        result.innerHTML = JSON.stringify(json, null, 4);
+    
+                        // http://stackoverflow.com/questions/10936854/highlight-syntax-in-pre-tags-with-highlight-js
+                        hljs.initHighlightingOnLoad();
+    
+                        markers.clearLayers();
+                        
+                        json.forEach(function(el, i) {
+                            var marker = L.marker([el.latitude, el.longitude]);
+                            marker.bindPopup("<h2>" + el.name + "</h2>'");
+                            markers.addLayer(marker);
+                        });
+                        map.addLayer(markers);
+                    }
+                }
+                http.send(params);
+    
+                // see https://css-tricks.com/dangers-stopping-event-propagation/
+                event.preventDefault();
+                event.stopPropagation();
+            })
+    
+        } // end: window.onload
+    </script>
+</section>

@@ -103,6 +103,7 @@ server.register(
             require('./resources/docs'),
             require('./resources/tos'),
             require('./resources/install'),
+            require('./resources/geoparser'),
             require('./resources/about')
         ]);
 

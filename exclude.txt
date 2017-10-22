@@ -1,0 +1,12 @@
+*.js
+*.css
+*.handlebars
+.gitignore
+.git/*
+*.log
+node_modules/*
+*.html
+*.md
+*.txt
+.DS_Store
+
